@@ -1,36 +1,24 @@
-# Stage 1: Build
-FROM node:alpine AS builder
+FROM node:latest
 
-RUN apk add --no-cache \
-  chromium \
-  nss \
-  freetype \
-  harfbuzz \
+RUN apt-get update && apt-get install -y \
+  wget \
+  gnupg \
   ca-certificates \
-  ttf-freefont \
-  wqy-zenhei
+  apt-transport-https \
+  chromium \
+  chromium-driver \
+  xvfb 
+
+ENV CHROME_BIN=/usr/bin/chromium
 
 WORKDIR /app
+
 COPY package*.json ./
-RUN npm install --production
+
+RUN npm update
+RUN npm install
 COPY . .
 
-# Stage 2: Runtime
-FROM node:alpine AS runtime
-
-RUN apk add --no-cache \
-  chromium \
-  nss \
-  freetype \
-  harfbuzz \
-  ca-certificates \
-  ttf-freefont \
-  wqy-zenhei
-
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
-
-WORKDIR /app
-COPY --from=builder /app /app
-
 EXPOSE 3012
-CMD ["node", "main.js"]
+
+CMD ["node", "main"]
