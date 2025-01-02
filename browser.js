@@ -1,10 +1,15 @@
-import { launch } from "puppeteer";
+import { connect } from "puppeteer-real-browser";
 
 class Browser {
   static browser;
 
   static async launchBrowser() {
-    Browser.browser = await launch({ headless: false, args: ["--no-sandbox"] });
+    const { browser } = await connect({
+      headless: false,
+      args: ["--no-sandbox"],
+    });
+
+    Browser.browser = browser;
 
     Browser.browser.on("disconnected", () => {
       console.log("Browser was closed. Relaunching in 2 seconds...");
