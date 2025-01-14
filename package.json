@@ -1,0 +1,18 @@
+{
+  "name": "cf-clearance-scraper",
+  "version": "2.0.7",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --experimental-vm-modules ./node_modules/.bin/jest --detectOpenHandles --verbose"
+  },
+  "author": "zfcsoftware",
+  "license": "ISC",
+  "description": "This package is an experimental and educational package created for Cloudflare protections.",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "puppeteer-real-browser": "^1.3.16"
+  },
+  "type": "module"
+}
